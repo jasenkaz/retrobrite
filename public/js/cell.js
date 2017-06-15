@@ -12,7 +12,7 @@
 //   };
 //   return Cell;                //this returns cell; now we can call this function over and over again
 // }
-
+//this file make a reusable code that we can call on a lot
 //constructor function is what wegonna use; notice the capital letter (proxy for a class; not technically a class)
 function Cell(width, height, color){
   this.width = width || 100; //browser choses width you type inside () of new Cell(), or defaults to 100; so if you type new Cell(200), it will give Cell{200,100,'red'}

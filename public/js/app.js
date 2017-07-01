@@ -1,6 +1,6 @@
 const App = {
   rootElement: '#app',
-  selectedColor: 'white',
+  selectedColor: 'pink',
   numRows: 30,
   numCols: 30,
   cellWidth: 15,
@@ -43,7 +43,7 @@ changeColor: function(rowIndex, colIndex){
   this.render();
 },
 resetGrid: function(){
-  this.selectedColor = 'white';
+  this.selectedColor = 'pink';
   this.makeGrid();
   this.render();
 },
@@ -53,15 +53,17 @@ resetGrid: function(){
   const resetButton = document.createElement('button');
   resetButton.textContent = 'Reset';
   resetButton.addEventListener('click', () => this.resetGrid());
-  this.gridOutput.appendChild(resetButton);
   this.grid.forEach((row, rowIndex) => {
     const rowContainer = document.createElement('div');
-
+    rowContainer.style.height = `${this.cellHeight}px`;
+    row.forEach((cell, colIndex) => {
+      const element = cell.toHtml();
       element.addEventListener('click', () => this.changeColor(rowIndex, colIndex));
       rowContainer.appendChild(element);     //rows are now containers
     });
     this.gridOutput.appendChild(rowContainer);
-  });
+    this.gridOutput.appendChild(resetButton);
+});
 }
 };
 App.start();

@@ -21,9 +21,11 @@ makeGrid: function(){
     }
   }
 },
+
 cacheDOM: function(){
   this.root = document.querySelector(this.rootElement);
 },
+
 bindEvents: function(){},
 changeColor: function(rowIndex, colIndex){
   this.grid[rowIndex][colIndex];
@@ -31,6 +33,7 @@ changeColor: function(rowIndex, colIndex){
   cell.color = this.selectedColor;
   this.render();
 },
+
 render: function(){               //mixing up html with java makes it quicker and easier to change properties like height and width of the cell above; if it was hardcoded in js only, you cant change it easy
   this.root.innerHTML = '';
   this.grid.forEach((row, rowIndex) => {

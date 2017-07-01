@@ -1,10 +1,10 @@
 const App = {
   rootElement: '#app',
   selectedColor: 'white',
-  numRows: 10,
-  numCols: 10,
-  cellWidth: 25,
-  cellHeight: 25,
+  numRows: 30,
+  numCols: 30,
+  cellWidth: 15,
+  cellHeight: 15,
   grid: [],                 //grid is an array of array
   start: function(){
     this.cacheDOM();
@@ -24,29 +24,44 @@ makeGrid: function(){
 
 cacheDOM: function(){
   this.root = document.querySelector(this.rootElement);
+  this.colorButtons = this.root.querySelectorAll('button.color');
+  this.gridOutput = this.root.querySelector('.grid-output');
 },
 
-bindEvents: function(){},
+bindEvents: function(){
+  this.colorButtons.forEach(btn => {
+    const newColor = btn.classList[1];
+    btn.addEventListener('click', () => this.setColor(newColor));
+    });
+},
+setColor: function(newColor){
+  this.selectedColor = newColor;
+},
 changeColor: function(rowIndex, colIndex){
-  this.grid[rowIndex][colIndex];
   const cell = this.grid[rowIndex][colIndex];
   cell.color = this.selectedColor;
   this.render();
 },
+resetGrid: function(){
+  this.selectedColor = 'white';
+  this.makeGrid();
+  this.render();
+},
 
-render: function(){               //mixing up html with java makes it quicker and easier to change properties like height and width of the cell above; if it was hardcoded in js only, you cant change it easy
-  this.root.innerHTML = '';
+ render: function(){               //mixing up html with java makes it quicker and easier to change properties like height and width of the cell above; if it was hardcoded in js only, you cant change it easy
+  this.gridOutput.innerHTML = '';
+  const resetButton = document.createElement('button');
+  resetButton.textContent = 'Reset';
+  resetButton.addEventListener('click', () => this.resetGrid());
+  this.gridOutput.appendChild(resetButton);
   this.grid.forEach((row, rowIndex) => {
     const rowContainer = document.createElement('div');
-    rowContainer.style.height = `${this.cellHeight}px`;
-    row.forEach((cell, colIndex) => {
-      const element = cell.toHtml();
+
       element.addEventListener('click', () => this.changeColor(rowIndex, colIndex));
       rowContainer.appendChild(element);     //rows are now containers
     });
-    this.root.appendChild(rowContainer);
+    this.gridOutput.appendChild(rowContainer);
   });
-
-},
 }
+};
 App.start();
